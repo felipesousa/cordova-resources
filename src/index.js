@@ -4,7 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
 var convert = require('./convert');
-var xlm2js  = require('xlm2js');
+var xml2js  = require('xml2js');
 
 var resources = ['icon', 'splash'];
 var platforms = fs.readdirSync('./platforms');
