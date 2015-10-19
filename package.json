@@ -1,0 +1,17 @@
+{
+  "name": "cordova-resources",
+  "version": "1.0.0",
+  "description": "Generate your resources easily.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipesousa/cordova-resources.git"
+  },
+  "author": "['Felipe Sousa', 'Victor Queiroz']",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/felipesousa/cordova-resources/issues"
+  },
+  "homepage": "https://github.com/felipesousa/cordova-resources#readme"
+}
+  
