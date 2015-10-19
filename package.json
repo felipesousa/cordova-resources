@@ -7,11 +7,17 @@
     "type": "git",
     "url": "git+https://github.com/felipesousa/cordova-resources.git"
   },
-  "author": "['Felipe Sousa', 'Victor Queiroz']",
+  "author": [
+    "Felipe Sousa <felipzbr@gmail.com>",
+    "Victor Queiroz <victorcqueirozg@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/felipesousa/cordova-resources/issues"
   },
-  "homepage": "https://github.com/felipesousa/cordova-resources#readme"
+  "homepage": "https://github.com/felipesousa/cordova-resources#readme",
+  "dependencies": {
+    "gm": "^1.20.0",
+    "q": "^1.4.1"
+  }
 }
-  
