@@ -1,0 +1,7 @@
+[  
+  {"dest": "res/drawable/icon.png",           "width": 96, "height": 96}, 
+  {"dest": "res/drawable-ldpi/icon.png",      "width": 36, "height": 36}, 
+  {"dest": "res/drawable-mdpi/icon.png",      "width": 48, "height": 48},
+  {"dest": "res/drawable-hdpi/icon.png",      "width": 72, "height": 72}, 
+  {"dest": "res/drawable-xhdpi/icon.png",     "width": 96, "height": 96}
+];
