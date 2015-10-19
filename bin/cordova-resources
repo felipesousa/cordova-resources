@@ -2,6 +2,8 @@
 
 var args = process.argv.slice(1);
 var exec = require('../src');
-console.log(args)
 
-module.exports = exec(args);
+module.exports = exec(args).then(function() {
+	console.log("DONE!");
+})
+.done();

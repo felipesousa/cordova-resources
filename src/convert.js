@@ -1,5 +1,5 @@
 var Q		= require('q');
-var gm 	= require('gm');
+var gm 	= require('gm').subClass({imageMagick: true});
 
 /**
  * convert.resize('./android-screen.png', 'platforms/android/res/(...)/screen.png', {

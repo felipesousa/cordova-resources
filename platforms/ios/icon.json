@@ -17,4 +17,4 @@
   {"dest": "{projectName}/Resources/icons/icon-76@2x.png",    "width": 152, "height": 152},
   {"dest": "{projectName}/Resources/icons/icon-small@2x.png", "width": 58,  "height": 58},
   {"dest": "{projectName}/Resources/icons/iTunesArtwork@2x.png","width": 1024, "height": 1024}
-];
+]

@@ -4,4 +4,4 @@
   {"dest": "res/drawable-mdpi/icon.png",      "width": 48, "height": 48},
   {"dest": "res/drawable-hdpi/icon.png",      "width": 72, "height": 72}, 
   {"dest": "res/drawable-xhdpi/icon.png",     "width": 96, "height": 96}
-];
+]
