@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
 var convert = require('./convert');
+var xlm2js  = require('xlm2js');
 
 var resources = ['icon', 'splash'];
 var platforms = fs.readdirSync('./platforms');
@@ -15,6 +16,34 @@ function generate (pwd, platform) {
 		return Q.all(_.map(platforms, function(name) {
 			return generate(pwd, name);
 		}));
+	}
+
+	/*
+	* Get projectName
+	*/
+
+	var settings = {CONFIG_FILE: 'config.xml'} 
+
+	var getProjectName = function () {
+		var deferred = Q.defer();
+		var parse =	new xlm2js();
+
+		fs.readFile(settings.CONFIG_FILE, function(err, data) {
+			if(err){
+			 return deferred.reject(err);
+			} 
+
+		  parser.parseString(data, function(err, result) {
+				if(err){
+					return deferred.reject(err);
+				}
+
+			var projectName = result.widget.name[0];
+				deferred.resolve(projectName);
+			});
+		})
+
+		return deferred.promisse;
 	}
 
 	_.forEach(resources, function(resource) {
