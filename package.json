@@ -1,12 +1,21 @@
 {
   "name": "cordova-resources",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate your resources easily.",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/felipesousa/cordova-resources.git"
   },
+  "keywords": [
+    "cordova",
+    "splash",
+    "crop",
+    "imagemagick",
+    "icons",
+    "generator",
+    "resources"
+  ],
   "directories": {
     "bin": "./bin"
   },
