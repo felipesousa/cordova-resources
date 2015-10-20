@@ -18,11 +18,27 @@ function generate (pwd, platform) {
 		}));
 	}
 
+
+	var settings = {CONFIG_FILE: 'config.xml'}
+
+	var hasConfigFile = function () {
+
+		var deferred = Q.defer();
+
+		fs.access(settings.CONFIG_FILE, fs.R_OK, function (err){
+			if(err){
+				return deferred.reject(err);
+			} else {
+				return deferred.resolve();
+			}
+		});
+
+		return deferred.promisse;
+	};
+
 	/*
 	* Get projectName
 	*/
-
-	var settings = {CONFIG_FILE: 'config.xml'} 
 
 	var getProjectName = function () {
 		var deferred = Q.defer();
@@ -31,7 +47,7 @@ function generate (pwd, platform) {
 		fs.readFile(settings.CONFIG_FILE, function(err, data) {
 			if(err){
 			 return deferred.reject(err);
-			} 
+			}
 
 		  parser.parseString(data, function(err, result) {
 				if(err){
@@ -41,10 +57,12 @@ function generate (pwd, platform) {
 			var projectName = result.widget.name[0];
 				deferred.resolve(projectName);
 			});
-		})
+		});
 
 		return deferred.promisse;
-	}
+	};
+
+
 
 	_.forEach(resources, function(resource) {
 		var deferred = Q.defer();
