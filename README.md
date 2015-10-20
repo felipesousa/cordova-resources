@@ -2,13 +2,14 @@
 Generate your resources easily.
 
 ## Installation
-
-`[sudo] npm install -g cordova-resources`
+```bash
+$ [sudo] npm install -g cordova-resources
+```
 
 ## Usage
-
-1. Has files in your root folder: `android-icon.png / android-splash.png / ios-icon.png / ios-splash.png`
-2. execute `cordova-resources` in your terminal
+```bash
+$ cordova-resources
+```
 
 ## Contributing
 1. Fork it!
