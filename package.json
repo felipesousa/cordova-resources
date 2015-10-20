@@ -34,5 +34,8 @@
     "mkdirp": "^0.5.1",
     "q": "^1.4.1",
     "xml2js": "^0.4.13"
+  },
+  "devDependencies": {
+    "simple-colors": "^0.1.0"
   }
 }

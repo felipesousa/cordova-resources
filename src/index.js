@@ -6,6 +6,8 @@ var mkdirp = require('mkdirp');
 var convert = require('./convert');
 var xml2js  = require('xml2js');
 
+require('simple-colors');
+
 var resources = ['icon', 'splash'];
 var platforms = fs.readdirSync('./platforms');
 
@@ -27,8 +29,10 @@ function generate (pwd, platform) {
 
 		fs.access(settings.CONFIG_FILE, fs.R_OK, function (err){
 			if(err){
+				console.log("config.xml no exists :(".red());
 				return deferred.reject(err);
 			} else {
+				console.log("Your project has file config.xml! :)".green());
 				return deferred.resolve();
 			}
 		});
@@ -46,15 +50,18 @@ function generate (pwd, platform) {
 
 		fs.readFile(settings.CONFIG_FILE, function(err, data) {
 			if(err){
+				console.log("Error".red());
 			 return deferred.reject(err);
 			}
 
 		  parser.parseString(data, function(err, result) {
 				if(err){
+					console.log("Error :(".red());
 					return deferred.reject(err);
 				}
 
 			var projectName = result.widget.name[0];
+				console.log("The name your project is ".green() + projectName.green() "!".green());
 				deferred.resolve(projectName);
 			});
 		});
@@ -76,7 +83,10 @@ function generate (pwd, platform) {
 				fs.accessSync(imagePath, fs.R_OK);
 				fs.accessSync(path.dirname(item.dest), fs.W_OK);
 
+				console.log("Generating...".green());
+
 				deferred.resolve(convert.resize(imagePath, item.dest, item));
+				console.log("DONE! :)".green());
 			});
 		});
 
