@@ -1,14 +1,17 @@
 # Cordova-resources
-Generate your resources easily.
+Generate your resources easily
 
 ## Installation
+
+obs: You need has installed [ImageMagick](http://www.imagemagick.org/script/index.php) in your machine.
+
 ```bash
-$ [sudo] npm install -g cordova-resources
+$ [sudo] npm install -g cordova-resources 
 ```
 
 ## Usage
 ```bash
-$ cordova-resources
+$ cordova-resources [platform]
 ```
 
 ## Contributing
