@@ -1,6 +1,6 @@
 {
   "name": "cordova-resources",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate your resources easily.",
   "main": "index.js",
   "repository": {
@@ -33,9 +33,7 @@
     "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
     "q": "^1.4.1",
+    "simple-colors": "^0.1.0",
     "xml2js": "^0.4.13"
-  },
-  "devDependencies": {
-    "simple-colors": "^0.1.0"
   }
 }
