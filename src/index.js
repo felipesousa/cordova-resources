@@ -7,15 +7,11 @@ var convert = require('./convert');
 var parseString = require('xml2js').parseString;
 require('simple-colors');
 
-
-
 var settings = {CONFIG_FILE: 'config.xml'}
 var resources = ['icon', 'splash'];
 
-
 var hasConfigFile = function () {
 	var deferred = Q.defer();
-
 	fs.access(settings.CONFIG_FILE, fs.R_OK, function (err){
 		if(err){
 			console.log();
@@ -51,7 +47,6 @@ var getProjectName = function () {
 				console.log('---------------------');
 				console.log("Error read CONFIG.XML ".red());
 				console.log('---------------------');
-
 				return deferred.reject(err);
 			}
 
@@ -70,7 +65,6 @@ var getProjectName = function () {
 function generate (pwd, platform) {
 	var promises = [];
 	var platforms = fs.readdirSync('platforms');
-
 	if(!platform) {
 		return Q.all(_.map(platforms, function(name) {
 			return generate(pwd, name);
