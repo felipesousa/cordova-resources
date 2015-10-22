@@ -4,15 +4,57 @@ var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
 var convert = require('./convert');
-var xml2js  = require('xml2js');
-
+var parseString = require('xml2js').parseString;
 require('simple-colors');
 
+var settings = {CONFIG_FILE: 'config.xml'}
 var resources = ['icon', 'splash'];
-var platforms = fs.readdirSync('./platforms');
+
+
+var hasConfigFile = function () {
+	var deferred = Q.defer();
+
+	fs.access(settings.CONFIG_FILE, fs.R_OK, function (err){
+		if(err){
+			console.log("config.xml no exists :(".red());
+			return deferred.reject(err);
+		} else {
+			console.log("Your project has file config.xml! :)".green());
+			return deferred.resolve();
+		}
+	});
+
+	return deferred.promise;
+};
+
+var getProjectName = function () {
+	var deferred = Q.defer();
+
+	fs.readFile(settings.CONFIG_FILE, function(err, data) {
+		if(err){
+			console.log("Error".red());
+		 	return deferred.reject(err);
+		}
+
+	  parseString(data, function(err, result) {
+			if(err){
+				console.log("Error :(".red());
+				return deferred.reject(err);
+			}
+		projectName = result.widget.name[0];
+
+			console.log("The name your project is ".green() + projectName .green()+ "!".green());
+
+			deferred.resolve(projectName);
+		});
+	});
+
+	return deferred.promise;
+};
 
 function generate (pwd, platform) {
 	var promises = [];
+	var platforms = fs.readdirSync('platforms');
 
 	if(!platform) {
 		return Q.all(_.map(platforms, function(name) {
@@ -20,80 +62,35 @@ function generate (pwd, platform) {
 		}));
 	}
 
+	return getProjectName()
+		.then(function (projectName) {
+			_.forEach(resources, function(resource) {
+				var deferred = Q.defer();
+				var items = JSON.parse(fs.readFileSync(`${__dirname}/../platforms/${platform}/${resource}.json`));
 
-	var settings = {CONFIG_FILE: 'config.xml'}
+				_.forEach(items, function(item) {
+					var imagePath = `${platform}-${resource}.png`;
 
-	var hasConfigFile = function () {
+					item.dest = item.dest.replace('{projectName}', projectName);
 
-		var deferred = Q.defer();
+					mkdirp(path.dirname(item.dest), function() {
+						fs.accessSync(imagePath, fs.R_OK);
+						fs.accessSync(path.dirname(item.dest), fs.W_OK);
 
-		fs.access(settings.CONFIG_FILE, fs.R_OK, function (err){
-			if(err){
-				console.log("config.xml no exists :(".red());
-				return deferred.reject(err);
-			} else {
-				console.log("Your project has file config.xml! :)".green());
-				return deferred.resolve();
-			}
-		});
+						console.log("Generate your resources".green() );
 
-		return deferred.promisse;
-	};
 
-	/*
-	* Get projectName
-	*/
+						deferred.resolve(convert.resize(imagePath, item.dest, item));
+						console.log("DONE! :)".green());
+					});
+				});
 
-	var getProjectName = function () {
-		var deferred = Q.defer();
-		var parse =	new xlm2js();
-
-		fs.readFile(settings.CONFIG_FILE, function(err, data) {
-			if(err){
-				console.log("Error".red());
-			 return deferred.reject(err);
-			}
-
-		  parser.parseString(data, function(err, result) {
-				if(err){
-					console.log("Error :(".red());
-					return deferred.reject(err);
-				}
-
-			var projectName = result.widget.name[0];
-				console.log("The name your project is ".green() + projectName.green() "!".green());
-				deferred.resolve(projectName);
+				promises.push(deferred.promise);
 			});
+
+			return Q.all(promises);  
 		});
 
-		return deferred.promisse;
-	};
-
-
-
-	_.forEach(resources, function(resource) {
-		var deferred = Q.defer();
-		var items = JSON.parse(fs.readFileSync(`${__dirname}/../platforms/${platform}/${resource}.json`));
-
-		_.forEach(items, function(item) {
-			var imagePath = `${platform}-${resource}.png`;
-
-			//item.dest = item.dest.replace('{projectName}', projectName);
-			mkdirp(path.dirname(item.dest), function() {
-				fs.accessSync(imagePath, fs.R_OK);
-				fs.accessSync(path.dirname(item.dest), fs.W_OK);
-
-				console.log("Generating...".green());
-
-				deferred.resolve(convert.resize(imagePath, item.dest, item));
-				console.log("DONE! :)".green());
-			});
-		});
-
-		promises.push(deferred.promise);
-	});
-
-	return Q.all(promises);
 }
 
 module.exports = _.spread(generate);
