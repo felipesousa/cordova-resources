@@ -10,7 +10,7 @@ require('simple-colors');
 var settings = {
 	CONFIG_FILE: 'config.xml',
 	PLATFORM_FOLDER: 'platforms'
-}
+};
 
 var platforms = ['android', 'ios'];
 var resources = ['icon', 'splash'];
@@ -41,10 +41,10 @@ var hasImages = function (platform) {
 				return deferred.resolve();
 			}
 		});
-	
+
 		return deferred.promise;
 	}));
-};
+});
 
 var hasPlatform = function () {
 	var deferred = Q.defer();
@@ -64,7 +64,7 @@ var hasPlatform = function () {
 	});
 
 	return deferred.promise;
-}
+};
 
 var hasConfigFile = function () {
 	var deferred = Q.defer();
@@ -90,11 +90,9 @@ var getProjectName = function () {
 
 	fs.readFile(settings.CONFIG_FILE, function(err, data) {
 		if(err){
-
 			console.log('----------------------------------'.red());
 			console.log("Your CONFIG.XML file don't exists!".red());
 			console.log('----------------------------------'.red());
-
 		 	return deferred.reject(err);
 		}
 
@@ -106,12 +104,12 @@ var getProjectName = function () {
 				return deferred.reject(err);
 			}
 
-		projectName = result.widget.name[0];
-			console.log('------------------------------------------'.green());
-			console.log("The name your project is ".green() + projectName .green()+ "!".green());
-			console.log('------------------------------------------'.green());
+			projectName = result.widget.name[0];
+				console.log('------------------------------------------'.green());
+				console.log("The name your project is ".green() + projectName .green()+ "!".green());
+				console.log('------------------------------------------'.green());
 
-			deferred.resolve(projectName);
+				deferred.resolve(projectName);
 		});
 	});
 
@@ -150,12 +148,11 @@ function generate (pwd, platform) {
 						console.log("DONE! :)".green());
 
 					});
-				});
-
+				})
 				promises.push(deferred.promise);
 			});
 
-			return Q.all(promises);  
+			return Q.all(promises);
 		});
 }
 
