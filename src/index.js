@@ -46,6 +46,25 @@ var hasImages = function (platform) {
 	}));
 };
 
+var hasPlatform = function () {
+	var deferred = Q.defer();
+	fs.access(settings.PLATFORM_FOLDER, fs.R_OK, function (err) {
+		if(err){
+			console.log('------------------------------------------'.red());
+			console.log("Your hasn't folder PLATFORM".red());
+			console.log("For resolve it problem, execute the command ".red() + "cordova platform add [android, ios]".green());
+			console.log('------------------------------------------'.red());
+			return deferred.reject(err);
+		} else {
+			console.log('------------------------------------------'.green());
+			console.log("Your project has folder platform".green());
+			console.log('------------------------------------------'.green());
+			return deferred.resolve();
+		}
+	});
+
+	return deferred.promise;
+}
 
 var hasConfigFile = function () {
 	var deferred = Q.defer();
