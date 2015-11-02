@@ -6,8 +6,14 @@ Generate your resources easily
 obs: You need has installed [ImageMagick](http://www.imagemagick.org/script/index.php) in your machine.
 
 ```bash
-$ [sudo] npm install -g cordova-resources 
+$ [sudo] npm install -g cordova-resources
 ```
+## Files
+
+*obs: You must have this file in your folder before you can generate your resources.*
+
+* **[android]** - `android-icon.png` for icons and `android-splash.png` for splash.
+* **[ios]** - `ios-icon.png` for icons and `ìos-splash.png` for splash.
 
 ## Usage
 ```bash
