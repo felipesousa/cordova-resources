@@ -70,14 +70,14 @@ var hasConfigFile = function () {
 	var deferred = Q.defer();
 	fs.access(settings.CONFIG_FILE, fs.R_OK, function (err){
 		if(err){
-			console.log();
+			console.log('------------------------------------------'.red());
 			console.log("Your project hasn't file CONFIG.XML :(".red());
-			console.log();
+			console.log('------------------------------------------'.red());
 			return deferred.reject(err);
 		} else {
-			console.log();
+			console.log('------------------------------------------'.green());
 			console.log("Your project has file config.xml! :)".green());
-			console.log();
+			console.log('------------------------------------------'.green());
 			return deferred.resolve();
 		}
 	});
@@ -91,25 +91,25 @@ var getProjectName = function () {
 	fs.readFile(settings.CONFIG_FILE, function(err, data) {
 		if(err){
 
-			console.log('----------------------------------');
+			console.log('----------------------------------'.red());
 			console.log("Your CONFIG.XML file don't exists!".red());
-			console.log('----------------------------------');
+			console.log('----------------------------------'.red());
 
 		 	return deferred.reject(err);
 		}
 
 	  parseString(data, function(err, result) {
 			if(err){
-				console.log('---------------------');
+				console.log('---------------------'.red());
 				console.log("Error read CONFIG.XML ".red());
-				console.log('---------------------');
+				console.log('---------------------'.red());
 				return deferred.reject(err);
 			}
 
 		projectName = result.widget.name[0];
-			console.log('------------------------------------------');
+			console.log('------------------------------------------'.green());
 			console.log("The name your project is ".green() + projectName .green()+ "!".green());
-			console.log('------------------------------------------');
+			console.log('------------------------------------------'.green());
 
 			deferred.resolve(projectName);
 		});
@@ -125,6 +125,7 @@ function generate (pwd, platform) {
 		return Q.all(_.map(platforms, function(name) {
 			return generate(pwd, name);
 		}));
+
 	}
 
 	return getProjectName()
@@ -137,13 +138,12 @@ function generate (pwd, platform) {
 					var imagePath = `${platform}-${resource}.png`;
 
 					item.dest = `platforms/${platform}/` + item.dest.replace('{projectName}', projectName);
-					item.dest = item.dest.replace('{projectName}', projectName);
 
 					mkdirp(path.dirname(item.dest), function() {
 						fs.accessSync(imagePath, fs.R_OK);
 						fs.accessSync(path.dirname(item.dest), fs.W_OK);
 						console.log('-----------------------'.green());
-						console.log("Generate your resources...".green() + imagePath .red() );
+						console.log("Generate your resources...".green() + imagePath .green() );
 
 						deferred.resolve(convert.resize(imagePath, item.dest, item));
 						console.log();
@@ -157,7 +157,13 @@ function generate (pwd, platform) {
 
 			return Q.all(promises);  
 		});
-
 }
 
-module.exports = _.spread(generate);
+module.exports = _.spread(function (pwd, platform) {
+	var args = arguments;
+	return hasPlatform().then(function () {
+		return hasImages(platform);
+	}).then(function (){
+		return generate.apply(this, args);
+	});
+});
