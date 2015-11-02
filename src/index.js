@@ -136,6 +136,7 @@ function generate (pwd, platform) {
 				_.forEach(items, function(item) {
 					var imagePath = `${platform}-${resource}.png`;
 
+					item.dest = `platforms/${platform}/` + item.dest.replace('{projectName}', projectName);
 					item.dest = item.dest.replace('{projectName}', projectName);
 
 					mkdirp(path.dirname(item.dest), function() {
