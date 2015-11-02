@@ -7,8 +7,45 @@ var convert = require('./convert');
 var parseString = require('xml2js').parseString;
 require('simple-colors');
 
-var settings = {CONFIG_FILE: 'config.xml'}
+var settings = {
+	CONFIG_FILE: 'config.xml',
+	PLATFORM_FOLDER: 'platforms'
+}
+
+var platforms = ['android', 'ios'];
 var resources = ['icon', 'splash'];
+var images = [];
+
+var hasImages = function (platform) {
+	_.forEach(platforms.filter(function (plat) {
+
+		return plat == platform;
+	}), function (platform){
+		_.forEach(resources, function(resource){
+			images.push(`${platform}-${resource}.png`);
+		});
+	});
+
+	return Q.all(_.map(images, function (image){
+		var deferred = Q.defer();
+		fs.access(image, fs.R_OK, function(err){
+			if(err){
+				console.log('------------------------------------------'.red());
+				console.log("Your hasn't files images icons and splash".red());
+				console.log('------------------------------------------'.red());
+				return deferred.reject(err);
+			} else {
+				console.log('------------------------------------------'.green());
+				console.log("Your have images :)".green());
+				console.log('------------------------------------------'.green());
+				return deferred.resolve();
+			}
+		});
+	
+		return deferred.promise;
+	}));
+};
+
 
 var hasConfigFile = function () {
 	var deferred = Q.defer();
